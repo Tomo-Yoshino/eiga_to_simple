@@ -146,18 +146,49 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                                             fontWeight: FontWeight.bold,
                                           ),
                                       p: Theme.of(context).textTheme.bodyMedium,
-                                      code: const TextStyle(
-                                        backgroundColor: Colors.grey,
-                                        fontFamily: 'Courier',
+                                      code: TextStyle(
+                                        color: Colors.white, // コード文字色を白に
+                                        fontFamily: 'monospace', // 等幅フォント推奨
+                                        fontSize: 14,
                                       ),
                                       a: TextStyle(
                                         color: Colors.blueAccent,
                                         decoration: TextDecoration.underline,
                                       ),
+                                      blockquote: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                      blockquoteDecoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Colors.grey.shade300,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      codeblockDecoration: BoxDecoration(
+                                        color: Colors.black, // 背景を黒に
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
                                     ),
                                     imageBuilder: (uri, title, alt) {
+                                      final widthStr =
+                                          uri.queryParameters['width'];
+                                      final heightStr =
+                                          uri.queryParameters['height'];
+
+                                      final width = widthStr != null
+                                          ? double.tryParse(widthStr)
+                                          : null;
+                                      final height = heightStr != null
+                                          ? double.tryParse(heightStr)
+                                          : null;
+
                                       return Image.asset(
+                                        // クエリパラメータを無視したパスを使う場合
                                         uri.path,
+                                        width: width,
+                                        height: height,
                                         fit: BoxFit.cover,
                                       );
                                     },

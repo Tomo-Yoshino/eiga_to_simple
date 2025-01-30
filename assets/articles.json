@@ -1,0 +1,41 @@
+[
+    {
+        "title": "Flutterでブログを始めよう",
+        "description": "Flutterを使ってブログを開発する手順とポイントを紹介します。",
+        "imagePath": "assets/images/flutter_logo.png",
+        "author": "山田太郎",
+        "date": "2023-01-01T00:00:00.000",
+        "tags": [
+            "Flutter",
+            "ブログ",
+            "チュートリアル"
+        ],
+        "markdownPath": "assets/markdowns/article1.md"
+    },
+    {
+        "title": "Dartの基本文法",
+        "description": "Dart言語の基本的な文法と特徴を分かりやすく解説します。",
+        "imagePath": "assets/images/flutter_logo.png",
+        "author": "山田太郎",
+        "date": "2023-02-10T00:00:00.000",
+        "tags": [
+            "Dart",
+            "プログラミング",
+            "言語"
+        ],
+        "markdownPath": "assets/markdowns/article2.md"
+    },
+    {
+        "title": "Flutterで画面遷移を行う",
+        "description": "Navigatorを使った画面遷移の基本的な実装方法について学びます。",
+        "imagePath": "assets/images/flutter_logo.png",
+        "author": "山田太郎",
+        "date": "2023-03-15T00:00:00.000",
+        "tags": [
+            "Flutter",
+            "画面遷移",
+            "Navigator"
+        ],
+        "markdownPath": "assets/markdowns/article3.md"
+    }
+]
