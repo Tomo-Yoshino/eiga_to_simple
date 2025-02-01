@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../config.dart';
 
 // 各要素のWidgetをインポート
 import '../widgets/blog_title.dart';
@@ -68,10 +69,11 @@ class HomeScreen extends StatelessWidget {
                                         MainAxisAlignment.start, // 上寄せ
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       ProfileSectionWidget(),
-                                      SearchSectionWidget(),
-                                      TagSectionWidget(),
+                                      if (Config.enableSearch)
+                                        SearchSectionWidget(),
+                                      if (Config.enableTags) TagSectionWidget(),
                                     ],
                                   ),
                                 ),

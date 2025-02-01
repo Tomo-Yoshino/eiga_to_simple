@@ -27,6 +27,9 @@ class TagSectionWidget extends StatelessWidget {
               return ElevatedButton(
                 onPressed: () {
                   // タグで記事を絞り込む処理
+                  print('Selected tag: $tag'); // 選択されたタグを出力
+                  // TODO: タグに基づいて記事を絞り込む処理を実装
+                  // 例: ArticleListWidgetに選択されたタグを渡して絞り込みを行う
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent
