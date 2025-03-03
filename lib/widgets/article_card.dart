@@ -39,7 +39,7 @@ class ArticleCard extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 1, // 正方形
                       child: Image.asset(
-                        article.imagePath,
+                        article.imagePath[0],
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(

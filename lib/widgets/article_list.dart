@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../models/article.dart';
 import 'article_card.dart';
 import '../screens/article_detail_screen.dart'; // インポートを追加
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ArticleListWidget extends StatelessWidget {
   const ArticleListWidget({Key? key}) : super(key: key);
@@ -11,25 +12,26 @@ class ArticleListWidget extends StatelessWidget {
   // 記事データ取得
   Future<List<Article>> getArticles() async {
     try {
-      // JSONファイルを読み込む
-      final String jsonString =
-          await rootBundle.loadString('assets/articles.json');
-      final List<dynamic> jsonList = json.decode(jsonString);
+      // 'articles' コレクションから全ドキュメントを取得
+      QuerySnapshot snapshot =
+          await FirebaseFirestore.instance.collection('articles').get();
 
-      // JSONデータをArticleオブジェクトのリストに変換
-      return jsonList
-          .map((json) => Article(
-                title: json['title'],
-                description: json['description'],
-                imagePath: json['imagePath'],
-                author: json['author'],
-                date: DateTime.parse(json['date']),
-                tags: List<String>.from(json['tags']),
-                markdownPath: json['markdownPath'],
-              ))
-          .toList();
+      // 各ドキュメントのデータを Article オブジェクトに変換
+      return snapshot.docs.map((doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        return Article(
+          title: data['title'],
+          description: data['description'],
+          imagePath: List<String>.from(data['imagePath']),
+          author: data['author'],
+          // Firestore の Timestamp を DateTime に変換
+          date: (data['date'] as Timestamp).toDate(),
+          tags: List<String>.from(data['tags']),
+          markdownPath: data['markdownPath'],
+        );
+      }).toList();
     } catch (e) {
-      print('Error loading articles: $e');
+      print('Error loading articles from Firestore: $e');
       return [];
     }
   }

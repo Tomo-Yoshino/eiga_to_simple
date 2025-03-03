@@ -1,7 +1,7 @@
 class Article {
   final String title;
   final String description;
-  final String imagePath; // ローカル画像のパス
+  final List<String> imagePath; // ローカル画像のパス
   final String author;
   final DateTime date;
   final List<String> tags;
