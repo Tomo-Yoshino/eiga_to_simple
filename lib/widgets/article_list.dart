@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/article.dart';
 import 'article_card.dart';
@@ -12,26 +12,18 @@ class ArticleListWidget extends StatelessWidget {
   // 記事データ取得
   Future<List<Article>> getArticles() async {
     try {
-      // 'articles' コレクションから全ドキュメントを取得
-      QuerySnapshot snapshot =
-          await FirebaseFirestore.instance.collection('articles').get();
+      final response =
+          await http.get(Uri.parse('http://localhost:8080/api/articles'));
 
-      // 各ドキュメントのデータを Article オブジェクトに変換
-      return snapshot.docs.map((doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        return Article(
-          title: data['title'],
-          description: data['description'],
-          imagePath: List<String>.from(data['imagePath']),
-          author: data['author'],
-          // Firestore の Timestamp を DateTime に変換
-          date: (data['date'] as Timestamp).toDate(),
-          tags: List<String>.from(data['tags']),
-          markdownPath: data['markdownPath'],
-        );
-      }).toList();
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonList = json.decode(response.body);
+        return jsonList.map((json) => Article.fromJson(json)).toList();
+      } else {
+        print('Error fetching articles: ${response.statusCode}');
+        return [];
+      }
     } catch (e) {
-      print('Error loading articles from Firestore: $e');
+      print('Error loading articles from API: $e');
       return [];
     }
   }
